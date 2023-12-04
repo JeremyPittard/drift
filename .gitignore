@@ -9,3 +9,5 @@ node_modules/
 # other node things
 package-lock.json
 
+#parcel
+.parcel-cache/
