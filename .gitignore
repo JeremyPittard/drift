@@ -1,0 +1,11 @@
+# wordpress/php bits and bobs
+vendor
+wp-content
+composer.lock
+
+# Dependency directories
+node_modules/
+
+# other node things
+package-lock.json
+
