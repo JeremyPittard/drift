@@ -69,3 +69,57 @@ $role_object = get_role('editor');
 
 // add $cap capability to this role object
 $role_object->add_cap('edit_theme_options');
+
+//  custom block category for new blocks
+add_filter('block_categories_all', function ($categories) {
+
+    // Adding a new category.
+    $categories[] = array(
+        'slug'  => 'midsen-layout',
+        'title' => 'Midsen'
+    );
+
+    return $categories;
+});
+
+// Whitelist specific Gutenberg blocks for non admins
+// based on https://rudrastyh.com/gutenberg/remove-default-blocks.html#allowed_block_types_all
+
+add_filter('allowed_block_types_all', 'jp_allowed_block_types', 25, 2);
+
+function jp_allowed_block_types($allowed_blocks, $editor_context)
+{
+    //only block for non admin
+    if (!current_user_can('administrator')) {
+        return array(
+            'core/paragraph',
+            'core/html',
+            'lazyblock/hero'
+        );
+    }
+    // If the user is an administrator, allow all blocks
+    return $allowed_blocks;
+}
+
+
+//remove this for prod
+function dump_registered_blocks()
+{
+    $block_types = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+    $output = '<ul>';
+    foreach ($block_types as $block_type) {
+        $output .= '<li>' . esc_html($block_type->name) . '</li>';
+    }
+    $output .= '</ul>';
+
+    return $output;
+}
+
+// Register a shortcode to use in a custom HTML block
+function register_blocks_dump_shortcode()
+{
+    add_shortcode('blocks_dump', 'dump_registered_blocks');
+}
+
+add_action('init', 'register_blocks_dump_shortcode');
