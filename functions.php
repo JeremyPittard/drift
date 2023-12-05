@@ -189,6 +189,16 @@ include get_template_directory() . './wp-mods/mods.php';
 require_once get_template_directory() . './options/options.php';
 
 //include custom posts
+// include get_template_directory() . './custom-posts/filename.php';
+
+//this adds tailwind to the admin pages so that the block editor looks fine
+// Update CSS within in Admin
+// function admin_style()
+// {
+// 	wp_enqueue_style('admin-styles', get_template_directory_uri() . '/style.css');
+// }
+// add_action('admin_enqueue_scripts', 'admin_style');
+
 
 
 new StarterSite();

@@ -31,3 +31,41 @@ function disable_emojis_tinymce($plugins)
         return array();
     }
 }
+
+function wpb_login_logo()
+{
+    $site_icon_url = get_site_icon_url();
+
+    if (!empty($site_icon_url)) {
+?>
+        <style type="text/css">
+            .login {
+                background-color: white;
+            }
+
+            #login h1 a,
+            .login h1 a {
+                background-image: url(<?php echo esc_url($site_icon_url); ?>);
+                height: 200px;
+                width: 200px;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                padding-bottom: 10px;
+                background-size: contain;
+            }
+        </style>
+<?php
+    }
+}
+add_action('login_enqueue_scripts', 'wpb_login_logo');
+
+// disable theme editors
+define('DISALLOW_FILE_EDIT', true);
+
+// add editor the privilege to edit theme
+
+// get the the role object
+$role_object = get_role('editor');
+
+// add $cap capability to this role object
+$role_object->add_cap('edit_theme_options');
