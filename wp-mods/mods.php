@@ -34,9 +34,11 @@ function disable_emojis_tinymce($plugins)
 
 function wpb_login_logo()
 {
-    $site_icon_url = get_site_icon_url();
+    // Retrieve the logo URL from the Brand Settings options
+    $brand_settings_options = get_option('brand_settings_option_name');
+    $logo_url = isset($brand_settings_options['logo_upload']) ? esc_url($brand_settings_options['logo_upload']) : '';
 
-    if (!empty($site_icon_url)) {
+    if (!empty($logo_url)) {
 ?>
         <style type="text/css">
             .login {
@@ -45,7 +47,7 @@ function wpb_login_logo()
 
             #login h1 a,
             .login h1 a {
-                background-image: url(<?php echo esc_url($site_icon_url); ?>);
+                background-image: url(<?php echo $logo_url; ?>);
                 height: 200px;
                 width: 200px;
                 background-size: 100%;
@@ -92,8 +94,17 @@ function jp_allowed_block_types($allowed_blocks, $editor_context)
     //only block for non admin
     if (!current_user_can('administrator')) {
         return array(
-            'core/paragraph',
-            'core/html',
+            'lazyblock/cards',
+            'lazyblock/tabs',
+            'lazyblock/stats',
+            'lazyblock/testimonials',
+            'lazyblock/features',
+            'lazyblock/faqs',
+            'lazyblock/logo-grid',
+            'lazyblock/contact',
+            'lazyblock/people',
+            'lazyblock/image',
+            'lazyblock/cta',
             'lazyblock/hero'
         );
     }

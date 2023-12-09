@@ -1,10 +1,16 @@
 {% if menu %}
+	{# list of links #}
 	<ul>
-	{% for item in items %}
-		<li class="{{ item.classes | join(' ') }}">
-			<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
-			{% include "menu.twig" with {'items': item.children} %}
-		</li>
-	{% endfor %}
+		{% for item in items %}
+			<li class="{{ item.classes | join(' ') }}">
+				<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+	<img
+	src="{{site.icon()}}">
+	{# list of buttons #}
+	<ul>
+		<li><a href="#" class="btn">get in touch</a></li>
 	</ul>
 {% endif %}
